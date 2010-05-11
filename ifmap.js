@@ -117,9 +117,7 @@ function IfmapIdentifier(type, attributes) {
   var xml = new XMLObject('identifier');
   var innerXml = new XMLObject(this.type);
   
-  $.each(this.attributes, function(key, value) {
-    innerXml.attr(key, value);
-  });
+  $.each(this.attributes, function(key, value) { innerXml.attr(key, value) });
   
   xml.appendChild(innerXml);
   
@@ -134,14 +132,12 @@ function IfmapMetadata(type, params) {
   var xml = new XMLObject('metadata');
   var innerXml = new XMLObject('meta:' + this.type);
   
-  $.each(this.params, function(key, value) {
-    innerXml.attr(key, value);
-  });
+  $.each(this.params, function(key, value) { innerXml.attr(key, value) });
   
   xml.appendChild(innerXml);
   
   this.xml = function() { return xml };
-  this.toXML = function() { return xml.toXML(); };
+  this.toXML = function() { return xml.toXML() };
 }
 
 // An object to handle construction of SOAP requests
@@ -149,7 +145,7 @@ function SOAPRequest(action, xmlObj) {
   this.action = action;  
   var nss = [];
   var headers = [];
-  var bodies = (!!xmlObj) ? [xmlObj] : [];
+  var bodies = !!xmlObj ? [xmlObj] : [];
   
   this.addNamespace = function(ns, uri) { nss.push({'name': ns, 'uri': uri}) };
   this.addHeader = function(xmlObj) { headers.push(xmlObj) };
