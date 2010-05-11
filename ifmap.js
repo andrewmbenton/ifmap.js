@@ -1,3 +1,7 @@
+// ifmap.js
+// Copyright (c) 2010 Andrew Benton
+// This software is distributed under the MIT license. See LICENSE for details.
+
 function IfmapClient(url) {
   this.server = !!url ? url : '';
   var sessionId = '';
@@ -146,82 +150,50 @@ function SOAPRequest(action, xmlObj) {
   var nss = [];
   var headers = [];
   var bodies = (!!xmlObj) ? [xmlObj] : [];
+  
   this.addNamespace = function(ns, uri) { nss.push({'name': ns, 'uri': uri}) };
   this.addHeader = function(xmlObj) { headers.push(xmlObj) };
   this.addBody = function(xmlObj) { bodies.push(xmlObj) };
+  
   this.toXML = function() {
-    var soapEnv = new XMLObject("soapenv:Envelope");
-    soapEnv.attr("xmlns:soapenv","http://schemas.xmlsoap.org/soap/envelope/");
+    var soapEnv = new XMLObject('soapenv:Envelope');
+    soapEnv.attr('xmlns:soapenv','http://schemas.xmlsoap.org/soap/envelope/');
     // Add namespaces
-    if (nss.length > 0){
-      var tNs, tNo;
-      for (tNs in nss) { 
-        if (!nss.hasOwnProperty || nss.hasOwnProperty(tNs)) {
-          tNo = nss[tNs];
-          if (typeof(tNo) === "object") {
-            soapEnv.attr("xmlns:" + tNo.name, tNo.uri);
-          }
-        }
-      }
-    }
+    $.each(nss, function(i, ns) { soapEnv.attr('xmlns:' + ns.name, ns.uri) });
     // Add headers
     if (headers.length > 0) {
-      var soapHeader = soapEnv.appendChild(new XMLObject("soapenv:Header"));
-      var tHdr;
-      for (tHdr in headers) {
-        if (!headers.hasOwnProperty || headers.hasOwnProperty(tHdr)) {
-          soapHeader.appendChild(headers[tHdr]);
-        }
-      }
+      var soapHeader = soapEnv.appendChild(new XMLObject('soapenv:Header'));
+      $.each(headers, function(i, header) { soapHeader.appendChild(header) });
     }
     // Add body
     if (bodies.length > 0) {
-      var soapBody = soapEnv.appendChild(new XMLObject("soapenv:Body"));
-      var tBdy;
-      for (tBdy in bodies) {
-        if (!bodies.hasOwnProperty || bodies.hasOwnProperty(tBdy)) {
-          soapBody.appendChild(bodies[tBdy]);
-        }
-      }
+      var soapBody = soapEnv.appendChild(new XMLObject('soapenv:Body'));
+      $.each(bodies, function(i, body) { soapBody.appendChild(body) });
     }
-    return soapEnv.toXML();    
+    return soapEnv.toXML();
   };
 };
 
 // XML Object
 function XMLObject(name) {
-  this.typeOf = "XMLObject";
-  this.ns = null;
   this.name = name;
   this.attributes = [];
   this.children = [];
   this.value = null;
-  this.attr = function(name, value) { this.attributes.push({"name": name, "value": value}); return this; };
+  
+  this.attr = function(name, value) { this.attributes.push({'name': name, 'value': value}); return this; };
   this.appendChild = function(obj) { this.children.push(obj); return obj; };
-  this.val = function(v) { if(!v) { return this.value; } else { this.value = v; return this; } };
+  this.val = function(v) { if (!v) { return this.value; } else { this.value = v; return this; } };
+  
   this.toXML = function() {
     var out = [];
-    // Check for a namespace, and set up the element tag
-    if (!!this.ns) {
-      if(typeof(this.ns) === "object") {
-        out.push("<" + this.ns.name + ":" + this.name);
-        out.push(" xmlns:" + this.ns.name + "=\"" + this.ns.uri + "\"");
-      } else {
-        out.push("<" + this.name);
-        out.push(" xmlns=\"" + this.ns + "\"");
-      }
-    } else {
-      out.push("<" + this.name);
-    }
+    // Set up the element tag
+    out.push('<' + this.name);
     // Add attributes to the tag
     $.each(this.attributes, function(i, attribute) {
-      if (!!this.ns) {
-        out.push(" " + this.ns.name + ":" + attribute.name + "=\"" + attribute.value + "\"");
-       } else {
-        out.push(" " + attribute.name + "=\"" + attribute.value + "\"");
-       }
+      out.push(' ' + attribute.name + '="' + attribute.value + '"');
     });
-    out.push(">");
+    out.push('>');
     // Recursively push the XML of each child node       
     $.each(this.children, function(i, child) {
       if (typeof(child) === "object") { out.push(child.toXML()) }
@@ -229,7 +201,7 @@ function XMLObject(name) {
     // Push this node's value
     if (!!this.value) { out.push(this.value) }
     // Close the tag
-    !!this.ns ? out.push("</" + this.ns.name + ":" + this.name + ">") : out.push("</" + this.name + ">");
-    return out.join("");
+    out.push('</' + this.name + '>');
+    return out.join('');
   }
 }
