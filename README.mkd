@@ -41,7 +41,7 @@ and jQuery.each() are used heavily.
 -  Support for custom metadata isn't included.
 -  Support for subscriptions is nonexistent. Maybe soon...
 
-### IfmapClient ###
+## IfmapClient ##
 
 The IfmapClient constructor takes two arguments, proxyURI and mapURI. The constructor
 sets up an IF-MAP client and points it at **mapURI**, presumably the SOAP endpoint
@@ -72,16 +72,17 @@ is passed directly to jQuery.post() as the success argument. See the
    
    Delete metadata from an identifier or a link.
 
-### IfmapClient.search(identifier, params, callback) ###
-Search for metadata starting at an identifier.
+-  IfmapClient.search(identifier, params, callback)
+   -  **identifier**: an IfmapIdentifier object.
+   -  **params**: an object containing name/value pairs for IF-MAP search params
+      such as match-links and max-depth.
+   
+   Search for metadata starting at an identifier.
 
--  **identifier**: an IfmapIdentifier object.
--  **params**: an object containing name/value pairs for IF-MAP search params
-   such as match-links and max-depth.
+-  IfmapClient.purgePublisher(callback)
 
-### IfmapClient.purgePublisher(callback) ###
-Purge all metadata published by this client.
+   Purge all metadata published by this client.
 
-## IfmapIdentifier(type, params) ##
+## IfmapIdentifier ##
 
-## IfmapMetadata(type, params) ##
+## IfmapMetadata ##
