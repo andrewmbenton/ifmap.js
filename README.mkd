@@ -1,12 +1,9 @@
-Copyright (c) 2010 Andrew Benton
-ifmap.js is distributed under the MIT license. See LICENSE for details.
-
 # Overview #
 
-_ifmap.js_ is an IF-MAP Client Library implementation in JavaScript. It should
+**ifmap.js** is an IF-MAP Client Library implementation in JavaScript. It should
 run in any reasonably modern web browser or other JavaScript interpreter. For a
 description of IF-MAP see the specification and other documentation at
-[ifmapdev.com/documentation][http://ifmapdev.com/documentation].
+[ifmapdev.com/documentation](http://ifmapdev.com/documentation).
 
 Enough talk. Here's an...
 
@@ -30,7 +27,7 @@ Enough talk. Here's an...
 
 ## Dependencies ##
 
-_ifmap.js_ relies on [jQuery][http://jquery.com]. Specifically, jQuery.post()
+**ifmap.js** relies on [jQuery](http://jquery.com). Specifically, jQuery.post()
 and jQuery.each() are used heavily.
 
 ## Known Issues ##
