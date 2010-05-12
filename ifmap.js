@@ -2,8 +2,9 @@
 // Copyright (c) 2010 Andrew Benton
 // This software is distributed under the MIT license. See LICENSE for details.
 
-function IfmapClient(url) {
-  this.server = !!url ? url : '';
+function IfmapClient(proxyURI, mapURI) {
+  this.proxy = !!proxyURI ? proxyURI : '';
+  this.server = !!mapURI ? mapURI : '';
   var sessionId = '';
   var publisherId = '';
   this.namespaces = { 'ifmap': 'http://www.trustedcomputinggroup.org/2006/IFMAP/1',
@@ -20,7 +21,7 @@ function IfmapClient(url) {
     $.each(this.namespaces, function(key, value) { soapRequest.addNamespace(key, value) });
     this.request = soapRequest.toXML();
     //console.log(this.request);
-    $.post('/', 'url='+this.server+'&soap='+this.request, $.proxy(function(data, status, xhr) {
+    $.post(this.proxy, 'url='+this.server+'&soap='+this.request, $.proxy(function(data, status, xhr) {
       if (status == 'success') {
         var soapResponse = $(data['soap']);
         this.sessionId = soapResponse.find('ifmap\\:session-id:first').text();
@@ -51,7 +52,7 @@ function IfmapClient(url) {
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
     //console.log(this.request);
-    $.post('/', 'url='+this.server+'&soap='+this.request, callback, 'json');
+    $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
   
   /////// Delete ///////
@@ -75,7 +76,7 @@ function IfmapClient(url) {
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
     //console.log(this.request);
-    $.post('/', 'url='+this.server+'&soap='+this.request, callback, 'json');
+    $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
   
   /////// Search ///////
@@ -92,7 +93,7 @@ function IfmapClient(url) {
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
     //console.log(this.request);
-    $.post('/', 'url='+this.server+'&soap='+this.request, callback, 'json');
+    $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
 
   /////// Purge Publisher ///////
@@ -106,7 +107,7 @@ function IfmapClient(url) {
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
     //console.log(this.request);
-    $.post('/', 'url='+this.server+'&soap='+this.request, callback, 'json');
+    $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
 } // End IfmapClient definition
 
