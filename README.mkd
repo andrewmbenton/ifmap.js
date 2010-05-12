@@ -1,0 +1,41 @@
+Copyright (c) 2010 Andrew Benton
+ifmap.js is distributed under the MIT license. See LICENSE for details.
+
+# Overview #
+
+_ifmap.js_ is an IF-MAP Client Library implementation in JavaScript. It should
+run in any reasonably modern web browser or other JavaScript interpreter. For a
+description of IF-MAP see the specification and other documentation at
+[ifmapdev.com/documentation][http://ifmapdev.com/documentation].
+
+Enough talk. Here's an...
+
+## Example ##
+
+    // Create a client and establish a session with a MAP server
+    var client = new IfmapClient('https://itsa:secret@ifmap.example.com:8686/ifmap');
+    client.newSession();
+    
+    client.request; // Check out the IF-MAP request we just sent
+    
+    // Create some identifiers
+    var me = new IfmapIdentifier('identity', {'type': 'username', 'name': 'amb'});
+    var mySession = new IfmapIdentifier('access-request', {'name': '103:aw8h13nadwnpefgasd'});
+    
+    // And some metadata
+    var authenticatedAs = new IfmapMetadata('authenticated-as');
+    
+    // And publish it
+    client.publishUpdate([me, mySession], authenticatedAs, function(data, status, xhr) { alert(data['soap']) });
+
+## Dependencies ##
+
+_ifmap.js_ relies on [jQuery][http://jquery.com]. Specifically, jQuery.post()
+and jQuery.each() are used heavily.
+
+## Known Issues ##
+
+-  Pulling out session-id and publisher-id elements from a newSession response
+   won't work unless the elements are namespaced with the 'ifmap' prefix.
+-  IfmapMetadata needs work to support all standard IF-MAP metadata types.
+-  Support for custom metadata isn't included.
