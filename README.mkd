@@ -43,9 +43,9 @@ and jQuery.each() are used heavily.
 
 # IfmapClient(proxyURI, mapURI) #
 
-Set up an IF-MAP client and point it at +mapURI+, presumably the SOAP endpoint
+Set up an IF-MAP client and point it at **mapURI**, presumably the SOAP endpoint
 of some MAP server. The client works through a proxy, sold separately. The
-proxy needs to listen at +proxyURI+ for POST requests with parameters 'url' and
+proxy needs to listen at **proxyURI** for POST requests with parameters 'url' and
 'soap', which it should use to send a SOAP request to 'url' with 'soap' as the
 body.
 
@@ -59,17 +59,20 @@ Establish a new session with the MAP server.
 
 ## IfmapClient.publishUpdate(identifiers, metadata, callback) ##
 Publish metadata on an identifier or a link.
+
 -  **identifiers**: an array of one or two IfmapIdentifier objects.
 -  **metadata**: an IfmapMetadata object.
 
 ## IfmapClient.publishDelete(identifiers, filter, callback) ##
 Delete metadata from an identifier or a link.
+
 -  **identifiers**: an array of one or two IfmapIdentifier objects.
 -  **filter**: a filter string (see the
    [IF-MAP spec](http://ifmapdev.com/documentation) for formatting details).
 
 ## IfmapClient.search(identifier, params, callback) ##
 Search for metadata starting at an identifier.
+
 -  **identifier**: an IfmapIdentifier object.
 -  **params**: an object containing name/value pairs for IF-MAP search params
    such as match-links and max-depth.
