@@ -106,5 +106,5 @@ IfmapMetadata(type)
 
 -  **type**: A simple IF-MAP metadata type, as a string (e.g. 'access-request-ip').
 
-Both objects provide one useful function, toXML(), which serializes the object
-as a string of XML.
+Both kinds of objects provide one useful function, toXML(), which serializes
+the object as a string of XML and returns it.
