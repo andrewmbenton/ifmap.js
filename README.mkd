@@ -1,4 +1,4 @@
-# Overview #
+## Overview ##
 
 **ifmap.js** is an IF-MAP client library implementation in JavaScript. It should
 run in any reasonably modern web browser or other JavaScript interpreter. For a
@@ -10,7 +10,7 @@ example see [jsmap](http://github.com/andrewmbenton/jsmap).
 
 Enough talk. Here's an...
 
-## Example ##
+### Example ###
 
     // Create a client and establish a session with a MAP server
     var client = new IfmapClient('https://itsa:secret@ifmap.example.com:8686/ifmap');
@@ -28,12 +28,12 @@ Enough talk. Here's an...
     // And publish it
     client.publishUpdate([me, mySession], authenticatedAs, function(data, status, xhr) { console.log(data['soap']) });
 
-## Dependencies ##
+### Dependencies ###
 
 **ifmap.js** relies on [jQuery](http://jquery.com). Specifically, jQuery.post()
 and jQuery.each() are used heavily.
 
-## Known Issues ##
+### Known Issues ###
 
 -  Pulling out session-id and publisher-id elements from a newSession response
    won't work unless the elements are namespaced with the 'ifmap' prefix.
@@ -41,7 +41,7 @@ and jQuery.each() are used heavily.
 -  Support for custom metadata isn't included.
 -  Support for subscriptions is nonexistent. Maybe soon...
 
-# IfmapClient(proxyURI, mapURI) #
+## IfmapClient(proxyURI, mapURI) ##
 
 Set up an IF-MAP client and point it at **mapURI**, presumably the SOAP endpoint
 of some MAP server. The client works through a proxy, sold separately. The
@@ -54,32 +54,32 @@ function on IfmapClient. For all the following functions, the callback argument
 is passed directly to jQuery.post() as the success argument. See the
 [jQuery.post() documentation](http://api.jquery.com/jQuery.post/) for more.
 
-## IfmapClient.newSession(callback) ##
+### IfmapClient.newSession(callback) ###
 Establish a new session with the MAP server.
 
-## IfmapClient.publishUpdate(identifiers, metadata, callback) ##
+### IfmapClient.publishUpdate(identifiers, metadata, callback) ###
 Publish metadata on an identifier or a link.
 
 -  **identifiers**: an array of one or two IfmapIdentifier objects.
 -  **metadata**: an IfmapMetadata object.
 
-## IfmapClient.publishDelete(identifiers, filter, callback) ##
+### IfmapClient.publishDelete(identifiers, filter, callback) ###
 Delete metadata from an identifier or a link.
 
 -  **identifiers**: an array of one or two IfmapIdentifier objects.
 -  **filter**: a filter string (see the
    [IF-MAP spec](http://ifmapdev.com/documentation) for formatting details).
 
-## IfmapClient.search(identifier, params, callback) ##
+### IfmapClient.search(identifier, params, callback) ###
 Search for metadata starting at an identifier.
 
 -  **identifier**: an IfmapIdentifier object.
 -  **params**: an object containing name/value pairs for IF-MAP search params
    such as match-links and max-depth.
 
-## IfmapClient.purgePublisher(callback) ##
+### IfmapClient.purgePublisher(callback) ###
 Purge all metadata published by this client.
 
-# IfmapIdentifier(type, params) #
+## IfmapIdentifier(type, params) ##
 
-# IfmapMetadata(type, params) #
+## IfmapMetadata(type, params) ##
