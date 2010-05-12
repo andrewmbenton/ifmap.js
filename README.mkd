@@ -13,7 +13,7 @@ Enough talk. Here's an...
     var client = new IfmapClient('https://itsa:secret@ifmap.example.com:8686/ifmap');
     client.newSession();
     
-    client.request; // Check out the IF-MAP request we just sent
+    console.log(client.request); // Check out the IF-MAP request we just sent
     
     // Create some identifiers
     var me = new IfmapIdentifier('identity', {'type': 'username', 'name': 'amb'});
@@ -23,7 +23,7 @@ Enough talk. Here's an...
     var authenticatedAs = new IfmapMetadata('authenticated-as');
     
     // And publish it
-    client.publishUpdate([me, mySession], authenticatedAs, function(data, status, xhr) { alert(data['soap']) });
+    client.publishUpdate([me, mySession], authenticatedAs, function(data, status, xhr) { console.log(data['soap']) });
 
 ## Dependencies ##
 
