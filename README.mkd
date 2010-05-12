@@ -89,6 +89,7 @@ An IfmapIdentifier object is pretty simple. Once constructed, it's not really
 meant to be changed. The constructor takes two arguments, **type** and **params**.
 
 IfmapIdentifier(type, params)
+
 -  **type**: An IF-MAP identifier type, as a string (e.g. 'ip-address').
 -  **params**: An object containing attribute/value pairs for this identifier
    (e.g. {'type': 'IPv4', 'value': '172.16.1.250'}).
@@ -97,6 +98,7 @@ An IfmapMetadata object is even simpler (for now). It's constructor only takes
 a **type** argument (since only simple metadata types are supported).
 
 IfmapMetadata(type)
+
 -  **type**: A simple IF-MAP metadata type, as a string (e.g. 'access-request-ip').
 
 Both objects provide one useful function, toXML(), which serializes the object
