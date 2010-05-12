@@ -41,9 +41,10 @@ and jQuery.each() are used heavily.
 -  Support for custom metadata isn't included.
 -  Support for subscriptions is nonexistent. Maybe soon...
 
-### IfmapClient(proxyURI, mapURI) ###
+### IfmapClient ###
 
-Set up an IF-MAP client and point it at **mapURI**, presumably the SOAP endpoint
+The IfmapClient constructor takes two arguments, proxyURI and mapURI. The constructor
+sets up an IF-MAP client and points it at **mapURI**, presumably the SOAP endpoint
 of some MAP server. The client works through a proxy, sold separately. The
 proxy needs to listen at **proxyURI** for POST requests with parameters 'url' and
 'soap', which it should use to send a SOAP request to 'url' with 'soap' as the
@@ -54,10 +55,10 @@ function on IfmapClient. For all the following functions, the callback argument
 is passed directly to jQuery.post() as the success argument. See the
 [jQuery.post() documentation](http://api.jquery.com/jQuery.post/) for more.
 
--  ### IfmapClient.newSession(callback) ###
+-  IfmapClient.newSession(callback)
    Establish a new session with the MAP server.
 
--  ### IfmapClient.publishUpdate(identifiers, metadata, callback) ###
+-  IfmapClient.publishUpdate(identifiers, metadata, callback)
    Publish metadata on an identifier or a link.
    -  **identifiers**: an array of one or two IfmapIdentifier objects.
    -  **metadata**: an IfmapMetadata object.
