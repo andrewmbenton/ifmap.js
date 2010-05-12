@@ -50,6 +50,11 @@ proxy needs to listen at **proxyURI** for POST requests with parameters 'url' an
 'soap', which it should use to send a SOAP request to 'url' with 'soap' as the
 body.
 
+IfmapClient(proxyURI, mapURI)
+
+-  **proxyURI**: A uri for this client's proxy, as a string.
+-  **mapURI**: A uri for the MAP server that this client should talk to, as a string.
+
 Each IF-MAP request (except attach-session and subscribe) has a corresponding
 function on IfmapClient. For all the following functions, the callback argument
 is passed directly to jQuery.post() as the success argument. See the
