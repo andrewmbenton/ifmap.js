@@ -41,8 +41,7 @@ function IfmapClient(proxyURI, mapURI) {
       update.appendChild(identifiers[0].xml());
     } else if (identifiers.length == 2) {
       link = new XMLObject('link');
-      link.appendChild(identifiers[0].xml());
-      link.appendChild(identifiers[1].xml());
+      link.appendChild(identifiers[0].xml()).appendChild(identifiers[1].xml());
       update.appendChild(link);
     }
     update.appendChild(metadata.xml());
@@ -66,8 +65,7 @@ function IfmapClient(proxyURI, mapURI) {
       del.appendChild(identifiers[0].xml());
     } else if (identifiers.length == 2) {
       link = new XMLObject('link');
-      link.appendChild(identifiers[0].xml());
-      link.appendChild(identifiers[1].xml());
+      link.appendChild(identifiers[0].xml()).appendChild(identifiers[1].xml());
       del.appendChild(link);
     }
     soapBody.appendChild(del);
@@ -146,25 +144,24 @@ function SOAPRequest(action, xmlObj) {
   this.action = action;  
   var nss = [];
   var headers = [];
-  var bodies = !!xmlObj ? [xmlObj] : [];
+  var bodies = (!!xmlObj && xmlObj.typeOf == 'XMLObject') ? [xmlObj] : [];
   
   this.addNamespace = function(ns, uri) { nss.push({'name': ns, 'uri': uri}) };
-  this.addHeader = function(xmlObj) { headers.push(xmlObj) };
-  this.addBody = function(xmlObj) { bodies.push(xmlObj) };
+  this.addHeader = function(xmlObj) { if (xmlObj.typeOf == 'XMLObject') { headers.push(xmlObj) } };
+  this.addBody = function(xmlObj) { if (xmlObj.typeOf == 'XMLObject') { bodies.push(xmlObj) } };
   
   this.toXML = function() {
     var soapEnv = new XMLObject('soapenv:Envelope');
     soapEnv.attr('xmlns:soapenv','http://schemas.xmlsoap.org/soap/envelope/');
-    // Add namespaces
     $.each(nss, function(i, ns) { soapEnv.attr('xmlns:' + ns.name, ns.uri) });
-    // Add headers
     if (headers.length > 0) {
-      var soapHeader = soapEnv.appendChild(new XMLObject('soapenv:Header'));
+      var soapHeader = new XMLObject('soapenv:Header');
+      soapEnv.appendChild(soapHeader);
       $.each(headers, function(i, header) { soapHeader.appendChild(header) });
     }
-    // Add body
     if (bodies.length > 0) {
-      var soapBody = soapEnv.appendChild(new XMLObject('soapenv:Body'));
+      var soapBody = new XMLObject('soapenv:Body');
+      soapEnv.appendChild(soapBody);
       $.each(bodies, function(i, body) { soapBody.appendChild(body) });
     }
     return soapEnv.toXML();
@@ -181,7 +178,7 @@ function XMLObject(name) {
   
   this.attr = function(name, value) { this.attributes.push({'name': name, 'value': value}); return this; };
   this.appendChild = function(obj) { if (obj.typeOf == 'XMLObject') { this.children.push(obj); return this; } };
-  this.val = function(value) { if (!v) { return this.value; } else { this.value = v; return this; } };
+  this.val = function(value) { if (!value) { return this.value; } else { this.value = value; return this; } };
   
   this.toXML = function() {
     var xml = [];
