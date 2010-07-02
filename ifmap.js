@@ -173,32 +173,28 @@ function SOAPRequest(action, xmlObj) {
 
 // XML Object
 function XMLObject(name) {
+  this.typeOf = 'XMLObject';
   this.name = name;
   this.attributes = [];
   this.children = [];
   this.value = null;
   
   this.attr = function(name, value) { this.attributes.push({'name': name, 'value': value}); return this; };
-  this.appendChild = function(obj) { this.children.push(obj); return obj; };
-  this.val = function(v) { if (!v) { return this.value; } else { this.value = v; return this; } };
+  this.appendChild = function(obj) { if (obj.typeOf == 'XMLObject') { this.children.push(obj); return this; } };
+  this.val = function(value) { if (!v) { return this.value; } else { this.value = v; return this; } };
   
   this.toXML = function() {
-    var out = [];
-    // Set up the element tag
-    out.push('<' + this.name);
-    // Add attributes to the tag
+    var xml = [];
+    xml.push('<' + this.name);
     $.each(this.attributes, function(i, attribute) {
-      out.push(' ' + attribute.name + '="' + attribute.value + '"');
+      xml.push(' ' + attribute.name + '="' + attribute.value + '"');
     });
-    out.push('>');
-    // Recursively push the XML of each child node       
+    xml.push('>');     
     $.each(this.children, function(i, child) {
-      if (typeof(child) === "object") { out.push(child.toXML()) }
+      if (typeof(child) === "object") { xml.push(child.toXML()) }
     });
-    // Push this node's value
-    if (!!this.value) { out.push(this.value) }
-    // Close the tag
-    out.push('</' + this.name + '>');
-    return out.join('');
+    if (!!this.value) { xml.push(this.value) }
+    xml.push('</' + this.name + '>');
+    return xml.join('');
   }
 }
