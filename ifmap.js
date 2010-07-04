@@ -20,7 +20,6 @@ function IfmapClient(proxyURI, mapURI) {
     var soapRequest = new SOAPRequest('new-session', soapBody);
     $.each(this.namespaces, function(key, value) { soapRequest.addNamespace(key, value) });
     this.request = soapRequest.toXML();
-    //console.log(this.request);
     $.post(this.proxy, 'url='+this.server+'&soap='+this.request, $.proxy(function(data, status, xhr) {
       if (status == 'success') {
         var soapResponse = $(data['soap']);
@@ -50,7 +49,6 @@ function IfmapClient(proxyURI, mapURI) {
     $.each(this.namespaces, function(key, value) { soapRequest.addNamespace(key, value) });
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
-    //console.log(this.request);
     $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
   
@@ -73,7 +71,6 @@ function IfmapClient(proxyURI, mapURI) {
     $.each(this.namespaces, function(key, value) { soapRequest.addNamespace(key, value) });
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
-    //console.log(this.request);
     $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
   
@@ -90,7 +87,6 @@ function IfmapClient(proxyURI, mapURI) {
     $.each(this.namespaces, function(key, value) { soapRequest.addNamespace(key, value) });
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
-    //console.log(this.request);
     $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
 
@@ -104,7 +100,6 @@ function IfmapClient(proxyURI, mapURI) {
     $.each(this.namespaces, function(key, value) { soapRequest.addNamespace(key, value) });
     soapRequest.addHeader(soapHeader);
     this.request = soapRequest.toXML();
-    //console.log(this.request);
     $.post(this.proxy, 'url='+this.server+'&soap='+this.request, callback, 'json');
   };
 } // End IfmapClient definition
